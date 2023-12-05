@@ -7,6 +7,9 @@ from mineclip.mineagent import features as F
 from mineclip import SimpleFeatureFusion, MineAgent, MultiCategoricalActor
 from mineclip.mineagent.batch import Batch
 from mineclip import CombatSpiderDenseRewardEnv
+from utils import random_env_step, get_frames_from_observations, print_space, save_video
+
+import os
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -87,7 +90,13 @@ def main(cfg):
         success_reward=10,
     )
 
-    for i in tqdm(range(2), desc="Episode"):
+    print("Initial prompt:", env.task_prompt)
+    env.task_prompt = "Chop a tree."
+    print("New prompt:", env.task_prompt)
+
+    all_frames = []
+
+    for i in tqdm(range(1), desc="Episode"):
         obs = env.reset()
         done = False
         pbar = tqdm(desc="Step")
@@ -95,9 +104,23 @@ def main(cfg):
             obs = preprocess_obs(obs)
             action = transform_action(mine_agent(obs).act)
             obs, reward, done, info = env.step(action)
+            all_frames.append(obs)
             pbar.update(1)
         print(f"{i+1}-th episode ran successful!")
     env.close()
+
+    video_name = f'mineclip_video.mp4'
+    filename = os.path.join(os.path.dirname(__file__), video_name)
+
+    frames = get_frames_from_observations(all_frames, 'minedojo')
+    save_video(
+        frames,
+        filename,
+        channel_first=True, 
+        low=0,
+        high=255,
+        invert_rgb=True,
+    )
 
 
 if __name__ == "__main__":
