@@ -5,8 +5,9 @@ from sentence_transformers import SentenceTransformer
 import torch.nn as nn
 
 class PromptEmbFeat(nn.Module):
-    def __init__(self, device):
+    def __init__(self, output_dim: int, device):
         super().__init__()
+        self._output_dim = output_dim
         self.model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
     def embed(self, x):
