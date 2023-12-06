@@ -5,7 +5,7 @@ from sentence_transformers import SentenceTransformer
 
 class PromptEmbFeat():
     def __init__(self):
-        model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+        self.model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
     def embed(self, x):
-        return model.encode(x) # Returns 384 dimensional embedding
+        return self.model.encode(x) # Returns 384 dimensional embedding
