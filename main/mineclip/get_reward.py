@@ -72,7 +72,9 @@ def mineclip_reward(frames: np.ndarray):
 
         return reward_scores_2
 
-    return calculate_reward()
+    reward = calculate_reward()
+    
+    return reward
 
 if __name__ == "__main__":
     mineclip_reward(frames=np.load('main/mineclip/frames_test.npy'))
