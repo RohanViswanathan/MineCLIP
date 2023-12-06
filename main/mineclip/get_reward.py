@@ -7,6 +7,7 @@ import numpy as np
 
 def mineclip_reward(frames: np.ndarray):
     print(type(frames))
+    reward = None
 
     @torch.no_grad()
     @hydra.main(config_name="conf", config_path=".", version_base="1.1")
@@ -68,13 +69,15 @@ def mineclip_reward(frames: np.ndarray):
         torch.testing.assert_allclose(logits_per_video, reward_scores_3)
         torch.testing.assert_allclose(logits_per_video, reward_scores_4)
 
-        print(reward_scores_2.shape)
+        print("reward shape:", reward_scores_2.shape)
 
-        return reward_scores_2
+        nonlocal reward
+        reward = reward_scores_2
 
-    reward = calculate_reward()
+    calculate_reward()
     
     return reward
 
 if __name__ == "__main__":
-    mineclip_reward(frames=np.load('main/mineclip/frames_test.npy'))
+    rew = mineclip_reward(frames=np.load('main/mineclip/frames_test.npy'))
+    print(rew)
