@@ -16,6 +16,8 @@ def main(cfg):
     model = MineCLIP(**cfg).to(device)
 
     video = torch.randint(0, 255, (6, 16, 3, 160, 256), device=device)
+    print("video shape:", video.shape)
+
     prompts = [
         "hello, this is MineCLIP",
         "MineCLIP is a VideoCLIP model trained on YouTube dataset from MineDojo's knowledge base",
@@ -54,6 +56,9 @@ def main(cfg):
     torch.testing.assert_allclose(logits_per_video, reward_scores_2)
     torch.testing.assert_allclose(logits_per_video, reward_scores_3)
     torch.testing.assert_allclose(logits_per_video, reward_scores_4)
+
+    print("reward: ", reward_scores_2)
+    print(reward_scores_2.shape)
 
     print("Inference successful")
 

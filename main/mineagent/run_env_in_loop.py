@@ -11,9 +11,7 @@ from utils import random_env_step, get_frames_from_observations, print_space, sa
 
 import os
 
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
 
 def preprocess_obs(env_obs):
     """
@@ -94,7 +92,7 @@ def main(cfg):
     env.task_prompt = "Chop a tree."
     print("New prompt:", env.task_prompt)
 
-    all_frames = []
+    all_obs = []
 
     for i in tqdm(range(1), desc="Episode"):
         obs = env.reset()
@@ -104,7 +102,7 @@ def main(cfg):
             obs = preprocess_obs(obs)
             action = transform_action(mine_agent(obs).act)
             obs, reward, done, info = env.step(action)
-            all_frames.append(obs)
+            all_obs.append(obs)
             pbar.update(1)
         print(f"{i+1}-th episode ran successful!")
     env.close()
@@ -112,7 +110,13 @@ def main(cfg):
     video_name = f'mineclip_video.mp4'
     filename = os.path.join(os.path.dirname(__file__), video_name)
 
-    frames = get_frames_from_observations(all_frames, 'minedojo')
+    frames = get_frames_from_observations(all_obs, 'minedojo')
+
+    print(type(frames), len(frames))
+    print(frames[0].shape)
+
+    # np.save('frames_test', np.array(frames))
+
     save_video(
         frames,
         filename,
