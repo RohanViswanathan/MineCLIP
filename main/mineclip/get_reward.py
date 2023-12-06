@@ -5,7 +5,7 @@ from omegaconf import OmegaConf
 from mineclip import MineCLIP
 import numpy as np
 
-def mineclip_reward(frames: np.ndarray):
+def mineclip_reward(frames: np.ndarray, task_prompt: list):
     print(type(frames))
     reward = None
 
@@ -30,12 +30,8 @@ def mineclip_reward(frames: np.ndarray):
 
         print("video shape:", video.shape)
 
-        prompts = [
-            "hello, this is MineCLIP",
-            "MineCLIP is a VideoCLIP model trained on YouTube dataset from MineDojo's knowledge base",
-            "Feel free to also checkout MineDojo at",
-            "https://minedojo.org",
-        ]
+        prompts = task_prompt
+        
         VIDEO_BATCH, TEXT_BATCH = video.size(0), len(prompts)
 
         image_feats = model.forward_image_features(video)
