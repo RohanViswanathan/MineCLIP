@@ -3,7 +3,6 @@ Note that prompt feature is provided by MineCLIP.
 """
 import torch.nn as nn
 
-
 class PromptEmbFeat(nn.Module):
     def __init__(self, output_dim: int, device):
         super().__init__()
