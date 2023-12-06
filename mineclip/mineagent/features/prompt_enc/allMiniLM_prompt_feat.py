@@ -2,6 +2,7 @@
 Note that prompt feature is provided by MineCLIP.
 """
 from sentence_transformers import SentenceTransformer
+import torch.nn as nn
 
 class PromptEmbFeat(nn.Module):
     def __init__(self, device):
