@@ -4,7 +4,7 @@ Note that prompt feature is provided by MineCLIP.
 from sentence_transformers import SentenceTransformer
 
 class PromptEmbFeat():
-    def __init__(self):
+    def __init__(self, device):
         self.model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
     def embed(self, x):
