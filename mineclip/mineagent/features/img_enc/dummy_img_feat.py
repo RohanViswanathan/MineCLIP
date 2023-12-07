@@ -32,7 +32,7 @@ class DummyImgFeat(nn.Module):
         conv_out = self.conv_layers(x)
         flatten = conv_out.view(conv_out.size(0), -1)  # Flatten the output for FC layers
         output = self.fc_layers(flatten)
-        return output.to(self._device), None
+        return output.to(self._device)
 
 # class DummyImgFeat(nn.Module):
 #     def __init__(self, *, output_dim: int = 512, device: torch.device):
