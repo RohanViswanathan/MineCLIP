@@ -19,7 +19,7 @@ class DummyImgFeat(nn.Module):
         )
         
         self.fc_layers = nn.Sequential(
-            nn.Linear(128 * 40 * 64, 512),
+            nn.Linear(2560, 512),
             nn.ReLU(),
             nn.Linear(512, output_dim)
         )
