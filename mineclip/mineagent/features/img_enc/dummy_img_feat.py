@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 
 class DummyImgFeat(nn.Module):
-    def __init__(self, output_dim: int = 512, device: torch.device):
+    def __init__(self, , device: torch.device, output_dim: int = 512):
         super().__init__()
         self._device = device
         self.conv_layers = nn.Sequential(
