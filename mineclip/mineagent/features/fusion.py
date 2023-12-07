@@ -49,6 +49,9 @@ class SimpleFeatureFusion(nn.Module):
         if isinstance(x, Batch):
             x.to_torch(device=self._device)
         x = {k: v.forward(x[k], **kwargs)[0] for k, v in self._extractors.items()}
+        for k in sorted(x.keys()):
+            if len(x[k].shape) == 1:
+                x[k] = torch.unsqueeze(x[k], 0)
         x = torch.cat([x[k] for k in sorted(x.keys())], dim=-1)
         x = self._head(x)
         return x, None
