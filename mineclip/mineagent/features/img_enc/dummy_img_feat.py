@@ -23,6 +23,10 @@ class DummyImgFeat(nn.Module):
             nn.Linear(512, output_dim)
         )
 
+    @property
+    def output_dim(self):
+        return self._output_dim
+
     def forward(self, x):
         conv_out = self.conv_layers(x)
         flatten = conv_out.view(conv_out.size(0), -1)  # Flatten the output for FC layers
